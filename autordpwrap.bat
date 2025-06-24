@@ -1,5 +1,13 @@
 @echo off
-:: AutoRDPWRAP GUI with Auto Close
+:: Kiểm tra quyền Admin
+fsutil dirty query %systemdrive% >nul 2>&1
+if %errorlevel% NEQ 0 (
+    echo Yêu cầu quyền Administrator. Đang khởi động lại với quyền cao...
+    powershell -Command "Start-Process '%~f0' -Verb RunAs"
+    exit
+)
+
+:: Nếu có quyền admin, bắt đầu chạy chương trình
 mode con: cols=80 lines=25
 color 0A
 title AutoRDPWRAP By @RVMOD_VN
@@ -9,7 +17,6 @@ cls
 echo.
 echo  ==================================================
 echo       AutoRDPWRAP Installer By @RVMOD_VN
-
 echo  ==================================================
 echo.
 echo        [1] Start Installation
@@ -55,7 +62,6 @@ cls
 echo.
 echo  ==================================================
 echo            Operation Cancelled by User
-
 echo  ==================================================
 timeout /t 2 >nul
 exit
@@ -65,7 +71,6 @@ cls
 echo.
 echo  ==================================================
 echo       AutoRDPWRAP Installer By @RVMOD_VN
-
 echo  ==================================================
 echo.
 echo  %~1
